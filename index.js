@@ -1,9 +1,9 @@
 const express = require('express');
 const { connectMongoDB } = require("./config/db-config");
 const cookieParser = require("cookie-parser");
-require('dotenv').config();
-import cors from "cors";
+require("dotenv").config();
 const app = express();
+const cors = require("cors");
 const port = process.env.PORT || 5000;
 
 app.use(
