@@ -11,6 +11,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://event-ease-mern-client-8bmb.vercel.app",
+      "https://event-ease-mern-client-8bmb-hkfwetzr7.vercel.app"
     ],
     credentials: true,
   })
