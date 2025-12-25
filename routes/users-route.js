@@ -50,7 +50,12 @@ router.post("/login", async (req, res) => {
 
     //create and assign token
     const token = jwt.sign({_id: user._id},process.env.JWT_SECRET_KEY)
-    return res.status(200).json({token,message:"login successfull"});
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    return res.status(200).json({message:"login successfull"});
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
