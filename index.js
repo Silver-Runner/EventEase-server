@@ -6,16 +6,34 @@ const app = express();
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "https://event-ease-mern-client-8bmb.vercel.app",
-      "https://event-ease-mern-client-8bmb-hkfwetzr7.vercel.app"
-    ],
-    credentials: true,
-  })
-);
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (
+    origin &&
+    (origin === "http://localhost:3000" ||
+      origin === "http://localhost:5173" ||
+      origin.endsWith(".vercel.app"))
+  ) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS"
+    );
+  }
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
+
 // Connect to MongoDB
 connectMongoDB();
 
